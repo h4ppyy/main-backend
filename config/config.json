@@ -4,7 +4,11 @@
     "password": "0000",
     "database": "test",
     "host": "127.0.0.1",
-    "dialect": "mysql"
+    "dialect": "mysql",
+    "jwtSecret": "jwt-secret",
+    "jwtSession": {
+      "session": false
+    }
   },
   "test": {
     "username": "root",
