@@ -2,7 +2,7 @@ const Sequelize = require('sequelize');
 const config = require('../../config/config.json');
 
 exports.connectionTest = function(req, res) {
-    
+
     const sequelize = new Sequelize(
         'mysql://' +
         config.development.username +

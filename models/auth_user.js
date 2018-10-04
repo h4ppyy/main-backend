@@ -1,4 +1,4 @@
-module.exports = function (sequelize, DataTypes) {
+module.exports = (sequelize, DataTypes) => {
     const auth_user = sequelize.define('auth_user', {
         id: {
             type: DataTypes.INTEGER,
