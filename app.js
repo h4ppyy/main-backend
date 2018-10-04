@@ -5,7 +5,6 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var sampleRouter = require('./routes/sample');
-var usersRouter = require('./routes/users');
 
 var app = express();
 
@@ -16,7 +15,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/sample', sampleRouter);
-app.use('/users', usersRouter);
 
 // error handler(404)
 app.use(function(req, res, next) {
