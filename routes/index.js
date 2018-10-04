@@ -1,5 +1,8 @@
 var express = require('express');
 var router = express.Router();
+
+var models  = require('../models/index');
+
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize('database', 'username', 'password', {
     host: '127.0.0.1',
@@ -31,6 +34,7 @@ router.get('/sample', function(req, res, next) {
             console.error('Unable to connect to the database:', err);
         });
 
+    /*
     const User = sequelize.define('auth_user', {
         id: {
             type: Sequelize.INTEGER,
@@ -44,19 +48,13 @@ router.get('/sample', function(req, res, next) {
             type: Sequelize.STRING
         },
     }, {freezeTableName: true, timestamps: false} );
+    */
 
-    var hello = null;
+    console.log(models);
 
-    User.findOne({
-        where: { email: 'test1@example.com' }
-    }).then(users => {
+    models.auth_userprofile.findOne({}).then(users => {
         console.log(users);
-        console.log(users.dataValues);
-        console.log(users.dataValues.id);
-        console.log(users.dataValues.email);
-        console.log(users.dataValues.password);
 
-        hello = users.dataValues;
         return res.json(users);
     })
 });
