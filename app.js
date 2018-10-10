@@ -5,8 +5,17 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const sampleRouter = require('./routes/sample');
+const apiRouter = require('./routes/api');
+
+const cors = require('cors');
+const bodyParser = require("body-parser");
 
 const app = express();
+
+app.use(cors());
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -14,6 +23,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/api', apiRouter);
 app.use('/sample', sampleRouter);
 
 // error handler(404)
