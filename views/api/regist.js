@@ -8,41 +8,28 @@ exports.regist = function(req, res) {
     var inputId = req.body.inputId;
     var inputPw = req.body.inputPw;
     var inputPw2 = req.body.inputPw2;
-
-    console.log('inputId -> ', inputId);
-    console.log('inputPw -> ', inputPw);
-    console.log('inputPw2 -> ', inputPw2);
+    var lock = 0;
 
     if(inputId == ''){
-        console.log('id is null');
+        lock = 1;    
         res.json({status: 'error001'});
-    } else if(inputPw = ''){
-        console.log('pw is null');
+    } else if(inputPw == ''){
+        lock = 1;
         res.json({status: 'error002'});
-    } else if(inputPw2 = ''){
-        console.log('pw2 is null');
+    } else if(inputPw2 == ''){
+        lock = 1;
         res.json({status: 'error003'});
     }
 
-    if(inputPw == inputPw2){
-        console.log('good');
+    if(inputPw == inputPw2 && lock == 0){
+        models.auth_user.create({
+            email: inputId,
+            password: inputPw,
+        }).then(newUser => {
+            res.json({status: 'success'});
+        });
     }
     else{
-        console.log('fail');
+        res.json({status: 'error004'});
     }
-    /*
-    models.auth_user.findAll({
-        where: {
-            authorId: 2
-        }
-    });
-    */
-
-    var payload = {
-        id: 'h4ppyy'
-    };
-
-    var token = jwt.sign(payload, config.development.jwtSecret);
-
-    res.json({access_token: token});
 }

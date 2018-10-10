@@ -5,11 +5,30 @@ const config = require('../../config/config.json');
 
 exports.login = function(req, res) {
 
-    var payload = {
-        id: 'h4ppyy'
-    };
+    var inputId = req.body.inputId;
+    var inputPw = req.body.inputPw;
 
-    var token = jwt.sign(payload, config.development.jwtSecret);
+    console.log('inputId -> ', inputId);
+    console.log('inputPw -> ', inputPw);
 
-    res.json({access_token: token});
+    models.auth_user.findAll({
+        where: {
+            email: inputId,
+            password: inputPw
+        }
+    }).then(rows => {
+        console.log('rows-> ', rows);
+        console.log('rows-> ', rows.length);
+
+        if(rows.length != 0){
+            var payload = {
+                id: inputId
+            };
+            var token = jwt.sign(payload, config.development.jwtSecret);
+            res.json({access_token: token});
+        }
+        else{
+            res.json({access_token: 'fail'});
+        }
+    });    
 }
