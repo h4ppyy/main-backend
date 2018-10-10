@@ -24,7 +24,7 @@ exports.login = function(req, res) {
             var payload = {
                 id: inputId
             };
-            var token = jwt.sign(payload, config.development.jwtSecret);
+            var token = jwt.sign(payload, config.development.jwtSecret, { expiresIn: 60 });
             res.json({access_token: token});
         }
         else{
